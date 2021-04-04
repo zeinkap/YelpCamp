@@ -1,6 +1,6 @@
 const { restaurantSchema, reviewSchema } = require('./schemas.js');
 const ExpressError = require('./utils/ExpressError');
-const restaurant = require('./models/restaurant');
+const Restaurant = require('./models/restaurant');
 const Review = require('./models/review');
 
 module.exports.isLoggedIn = (req, res, next) => {
@@ -12,7 +12,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     next();
 }
 
-module.exports.validaterestaurant = (req, res, next) => {
+module.exports.validateRestaurant = (req, res, next) => {
     const { error } = restaurantSchema.validate(req.body);
     console.log(req.body);
     if (error) {
@@ -25,7 +25,7 @@ module.exports.validaterestaurant = (req, res, next) => {
 
 module.exports.isAuthor = async (req, res, next) => {
     const { id } = req.params;
-    const restaurant = await restaurant.findById(id);
+    const restaurant = await Restaurant.findById(id);
     if (!restaurant.author.equals(req.user._id)) {
         req.flash('error', 'You do not have permission to do that!');
         return res.redirect(`/restaurants/${id}`);

@@ -1,4 +1,4 @@
-const restaurant = require('../models/restaurant');
+const Restaurant = require('../models/restaurant');
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
@@ -6,7 +6,7 @@ const { cloudinary } = require("../cloudinary");
 
 
 module.exports.index = async (req, res) => {
-    const restaurants = await restaurant.find({}).populate('popupText');
+    const restaurants = await Restaurant.find({}).populate('popupText');
     res.render('restaurants/index', { restaurants })
 }
 
@@ -14,12 +14,12 @@ module.exports.renderNewForm = (req, res) => {
     res.render('restaurants/new');
 }
 
-module.exports.createrestaurant = async (req, res, next) => {
+module.exports.createRestaurant = async (req, res, next) => {
     const geoData = await geocoder.forwardGeocode({
         query: req.body.restaurant.location,
         limit: 1
     }).send()
-    const restaurant = new restaurant(req.body.restaurant);
+    const restaurant = new Restaurant(req.body.restaurant);
     restaurant.geometry = geoData.body.features[0].geometry;
     restaurant.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     restaurant.author = req.user._id;
@@ -29,8 +29,8 @@ module.exports.createrestaurant = async (req, res, next) => {
     res.redirect(`/restaurants/${restaurant._id}`)
 }
 
-module.exports.showrestaurant = async (req, res,) => {
-    const restaurant = await restaurant.findById(req.params.id).populate({
+module.exports.showrestaurant = async (req, res) => {
+    const restaurant = await Restaurant.findById(req.params.id).populate({
         path: 'reviews',
         populate: {
             path: 'author'
@@ -45,7 +45,7 @@ module.exports.showrestaurant = async (req, res,) => {
 
 module.exports.renderEditForm = async (req, res) => {
     const { id } = req.params;
-    const restaurant = await restaurant.findById(id)
+    const restaurant = await Restaurant.findById(id)
     if (!restaurant) {
         req.flash('error', 'Cannot find that restaurant!');
         return res.redirect('/restaurants');
@@ -53,10 +53,10 @@ module.exports.renderEditForm = async (req, res) => {
     res.render('restaurants/edit', { restaurant });
 }
 
-module.exports.updaterestaurant = async (req, res) => {
+module.exports.updateRestaurant = async (req, res) => {
     const { id } = req.params;
     console.log(req.body);
-    const restaurant = await restaurant.findByIdAndUpdate(id, { ...req.body.restaurant });
+    const restaurant = await Restaurant.findByIdAndUpdate(id, { ...req.body.restaurant });
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
     restaurant.images.push(...imgs);
     await restaurant.save();
@@ -70,9 +70,9 @@ module.exports.updaterestaurant = async (req, res) => {
     res.redirect(`/restaurants/${restaurant._id}`)
 }
 
-module.exports.deleterestaurant = async (req, res) => {
+module.exports.deleteRestaurant = async (req, res) => {
     const { id } = req.params;
-    await restaurant.findByIdAndDelete(id);
+    await Restaurant.findByIdAndDelete(id);
     req.flash('success', 'Successfully deleted restaurant')
     res.redirect('/restaurants');
 }

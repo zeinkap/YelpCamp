@@ -1,8 +1,8 @@
-const restaurant = require('../models/restaurant');
+const Restaurant = require('../models/restaurant');
 const Review = require('../models/review');
 
 module.exports.createReview = async (req, res) => {
-    const restaurant = await restaurant.findById(req.params.id);
+    const restaurant = await Restaurant.findById(req.params.id);
     const review = new Review(req.body.review);
     review.author = req.user._id;
     restaurant.reviews.push(review);
@@ -14,7 +14,7 @@ module.exports.createReview = async (req, res) => {
 
 module.exports.deleteReview = async (req, res) => {
     const { id, reviewId } = req.params;
-    await restaurant.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Restaurant.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
     req.flash('success', 'Successfully deleted review')
     res.redirect(`/restaurants/${id}`);

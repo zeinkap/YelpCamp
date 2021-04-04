@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate')%>
 <div id="cluster-map"></div>
 <div class="container">
-    <h1>All restaurants</h1>
+    <h1>All Restaurants</h1>
 
     <% for (let restaurant of restaurants){%>
     <div class="card mb-3">
@@ -9,7 +9,7 @@
             <div class="col-md-4">
                 <%if(restaurant.images.length) {%>
                 <img class="img-fluid" alt="" src="<%=restaurant.images[0].url%>">
-                <% }else {%>
+                <% } else {%>
                 <img class="img-fluid" alt=""
                     src="https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/halal-foodie/lz8jjv2gyynjil7lswf4.png">
                 <% } %>

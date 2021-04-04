@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { validateReview, isLoggedIn, isReviewAuthor } = require('../middleware');
-const restaurant = require('../models/restaurant');
+const Restaurant = require('../models/restaurant');
 const Review = require('../models/review');
 const reviews = require('../controllers/reviews');
 const ExpressError = require('../utils/ExpressError');

@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 const Review = require('./review')
 const Schema = mongoose.Schema;
 
-
 // https://res.cloudinary.com/douqbebwk/image/upload/w_300/v1600113904/halal-foodie/gxgle1ovzd2f3dgcpass.png
-
 const ImageSchema = new Schema({
     url: String,
     filename: String
@@ -17,7 +15,10 @@ ImageSchema.virtual('thumbnail').get(function () {
 const opts = { toJSON: { virtuals: true } };
 
 const restaurantSchema = new Schema({
-    title: String,
+    title: {
+        type: String,
+        required: true
+    },
     images: [ImageSchema],
     geometry: {
         type: {
@@ -30,9 +31,10 @@ const restaurantSchema = new Schema({
             required: true
         }
     },
-    price: Number,
+    phone: Number,
     description: String,
     location: String,
+    website: String,
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -51,8 +53,6 @@ restaurantSchema.virtual('properties.popUpMarkup').get(function () {
     <strong><a href="/restaurants/${this._id}">${this.title}</a><strong>
     <p>${this.description.substring(0, 20)}...</p>`
 });
-
-
 
 restaurantSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
