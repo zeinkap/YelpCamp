@@ -1,14 +1,14 @@
 {
-  "name": "yelpcamp",
+  "name": "halal-foodie",
   "version": "1.0.0",
-  "description": "",
+  "description": "A one-stop for all foodies for finding restaurants that offer delicious halal food!",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["halal", "food"],
+  "author": "Zein Kap",
   "license": "ISC",
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.11.0",
