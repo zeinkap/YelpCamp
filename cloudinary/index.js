@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary,
     params: {
-        folder: 'halal-foodie',
+        folder: 'HalalFoodie',
         allowedFormats: ['jpeg', 'png', 'jpg']
     }
 });

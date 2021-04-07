@@ -29,7 +29,7 @@ module.exports.createRestaurant = async (req, res, next) => {
     res.redirect(`/restaurants/${restaurant._id}`)
 }
 
-module.exports.showrestaurant = async (req, res) => {
+module.exports.showRestaurant = async (req, res,) => {
     const restaurant = await Restaurant.findById(req.params.id).populate({
         path: 'reviews',
         populate: {

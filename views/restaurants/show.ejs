@@ -31,7 +31,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item text-muted"><%= restaurant.location%></li>
                 <li class="list-group-item">Submitted by <%= restaurant.author.username%></li>
-                <li class="list-group-item">$<%= restaurant.phone%>/night</li>
+                <li class="list-group-item">$<%= restaurant.price%>/night</li>
             </ul>
             <%  if( currentUser && restaurant.author.equals(currentUser._id))  {%>
             <div class="card-body">

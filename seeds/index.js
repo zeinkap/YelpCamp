@@ -13,7 +13,7 @@ const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-    console.log("Database connected and restaurants populated");
+    console.log("Database connected");
 });
 
 const sample = array => array[Math.floor(Math.random() * array.length)];
@@ -23,14 +23,14 @@ const seedDB = async () => {
     await Restaurant.deleteMany({});
     for (let i = 0; i < 300; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
-        const phone = Math.floor(Math.random() * 20) + 10;
+        const price = Math.floor(Math.random() * 20) + 10;
         const rest = new Restaurant({
             //YOUR USER ID
-            author: '6069daa57171744c74458926',
+            author: '606d2a1199942d4160131521',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam dolores vero perferendis laudantium, consequuntur voluptatibus nulla architecto, sit soluta esse iure sed labore ipsam a cum nihil atque molestiae deserunt!',
-            phone,
+            price,
             geometry: {
                 type: "Point",
                 coordinates: [
@@ -40,12 +40,12 @@ const seedDB = async () => {
             },
             images: [
                 {
-                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/halal-foodie/ahfnenvca4tha00h2ubt.png',
-                    filename: 'halal-foodie/ahfnenvca4tha00h2ubt'
+                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ahfnenvca4tha00h2ubt.png',
+                    filename: 'YelpCamp/ahfnenvca4tha00h2ubt'
                 },
                 {
-                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/halal-foodie/ruyoaxgf72nzpi4y6cdi.png',
-                    filename: 'halal-foodie/ruyoaxgf72nzpi4y6cdi'
+                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ruyoaxgf72nzpi4y6cdi.png',
+                    filename: 'YelpCamp/ruyoaxgf72nzpi4y6cdi'
                 }
             ]
         })
